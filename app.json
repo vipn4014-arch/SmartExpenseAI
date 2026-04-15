@@ -10,18 +10,18 @@
     "newArchEnabled": false,
     "plugins": [
       [
+        "expo-build-properties",
+        {
+          "android": {
+            "kotlinVersion": "1.9.25"
+          }
+        }
+      ],
+      [
         "react-native-google-mobile-ads",
         {
           "androidAppId": "ca-app-pub-3940256099942544~3347511713",
           "iosAppId": "ca-app-pub-3940256099942544~4411468910"
-        }
-      ],
-      [
-        "expo-build-properties",
-        {
-          "android": {
-            "kotlinVersion": "1.9.24"
-          }
         }
       ]
     ],
