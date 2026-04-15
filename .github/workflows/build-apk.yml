@@ -1,6 +1,6 @@
-name: Generate APK
+name: Generate APK (Direct Engine)
 on:
-  workflow_dispatch: # Allows manual trigger
+  workflow_dispatch:
   push:
     branches: [main, master]
 
@@ -23,25 +23,25 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Setup Expo
-        uses: expo/expo-github-action@v8
-        with:
-          eas-version: latest
-          token: ${{ secrets.EXPO_TOKEN }}
-
       - name: Install dependencies
         run: npm install
 
-      - name: Build APK Locally
+      - name: Prebuild Native Files
         env:
           EAS_NO_VCS: 1
+        run: npx expo prebuild --platform android --non-interactive
+
+      - name: Build APK with Gradle
+        env:
           NODE_OPTIONS: "--max-old-space-size=4096"
           JAVA_OPTS: "-Xmx4096m"
         run: |
-          eas build --platform android --profile preview --local --non-interactive
+          cd android
+          chmod +x gradlew
+          ./gradlew assembleRelease
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: SmartExpense-APK
-          path: "*.apk"
+          path: android/app/build/outputs/apk/release/app-release.apk
