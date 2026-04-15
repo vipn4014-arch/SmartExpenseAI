@@ -15,7 +15,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'npm'
+          cache: npm
 
       - name: Setup Java
         uses: actions/setup-java@v4
@@ -38,7 +38,7 @@ jobs:
           NODE_OPTIONS: "--max-old-space-size=4096"
           JAVA_OPTS: "-Xmx4096m"
         run: |
-          eas build --platform android --profile preview --local --non-interactive --verbose
+          eas build --platform android --profile preview --local --non-interactive
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
